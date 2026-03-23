@@ -1,20 +1,23 @@
-"""Main pipeline runner"""
+"""The main execution module"""
 
 from pipeline.extract import extract_weather
 from pipeline.transform import transform_weather
 from pipeline.load import load_weather
+from pipeline.database import init_db
 
 
 def run_pipeline():
-    """Execute the ETL pipeline"""
+    """The main execution function"""
 
-    raw_data = extract_weather()
+    init_db()
 
-    transformed_data = transform_weather(raw_data)
+    raw = extract_weather()
 
-    load_weather(transformed_data)
+    transformed = transform_weather(raw)
 
-    print("Pipeline completed successfully")
+    load_weather(transformed)
+
+    print("Pipeline finished")
 
 
 if __name__ == "__main__":
