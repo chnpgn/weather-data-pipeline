@@ -2,7 +2,6 @@
 
 from datetime import datetime
 
-
 def transform_weather(data: dict):
     """Clean and structure weather data"""
 
