@@ -1,4 +1,5 @@
-"""The main execution module"""
+import time
+import schedule
 
 from pipeline.extract import extract_weather
 from pipeline.transform import transform_weather
@@ -7,18 +8,20 @@ from pipeline.database import init_db
 
 
 def run_pipeline():
-    """The main execution function"""
-
-    init_db()
-
+    """"The main function """
     raw = extract_weather()
 
     transformed = transform_weather(raw)
 
     load_weather(transformed)
 
-    print("Pipeline finished")
 
+init_db()
 
-if __name__ == "__main__":
-    run_pipeline()
+schedule.every(1).hours.do(run_pipeline)
+
+print("Pipeline scheduler started...")
+
+while True:
+    schedule.run_pending()
+    time.sleep(60)
